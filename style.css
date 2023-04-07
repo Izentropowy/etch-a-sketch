@@ -57,6 +57,20 @@ body{
     padding: 5px;
 }
 
+.btn-black{
+    color: white;
+    background-color: black;
+}
+
+.btn-random{
+    color: white;
+    background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+
+.btn-erase{
+    background-color: white;
+}
+
 .grid{
     height: 480px;
     width: 480px;
