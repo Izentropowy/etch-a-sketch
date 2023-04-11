@@ -1,15 +1,17 @@
 const grid = document.querySelector(".grid");
-var gridSide = grid.clientHeight;
 const blackButton = document.querySelector(".btn-black");
 const randomButton = document.querySelector(".btn-random");
 const eraseButton = document.querySelector(".btn-erase");
 const clearButton = document.querySelector(".btn-clear");
 const label = document.querySelector("label");
 const slider = document.getElementById("resolution");
+const resolution = 40;
+var gridSide = grid.clientHeight;
 var gridChildren;
 var pixel;
-let markerColor = "black";
-const resolution = 80;
+var currentMode = "black";
+var markerColor;
+var mouseDown = false;
 
 function buildGrid(resolution){
     let a = gridSide / resolution;
@@ -30,65 +32,66 @@ function draw(){
 
     // color pixels only if mouse over AND mouse clicked
     gridChildren.forEach(function(element){
+
         element.addEventListener('mouseover', function(){
             if(mouseDown){
+                markerColor = setMarker(currentMode);
                 element.style.backgroundColor = markerColor;
             }
         })
 
         // first pixel clicked should also be colored
         element.addEventListener('click', function(){
+            markerColor = setMarker(currentMode);
             element.style.backgroundColor = markerColor;
         })
     })
 }
-
-// tools functionality
-blackButton.addEventListener('click', function(){
-    markerColor = "black";
-})
-
-randomButton.addEventListener('click', function(){
-    let R = Math.floor(Math.random() * 256);
-    let G = Math.floor(Math.random() * 256);
-    let B = Math.floor(Math.random() * 256);
-    markerColor = `rgb(${R}, ${G}, ${B})`;
-})
-
-eraseButton.addEventListener('click', function(){
-    markerColor = "white";
-})
 
 function clear(){
     gridChildren.forEach(function(element){
         element.style.backgroundColor = "white";
     })
 }
-clearButton.addEventListener('click', function(){
-    clear();
-})
 
-slider.addEventListener('input', function(){
+function chooseColor(){
+    let R = Math.floor(Math.random() * 256);
+    let G = Math.floor(Math.random() * 256);
+    let B = Math.floor(Math.random() * 256);
+    return `rgb(${R}, ${G}, ${B})`;
+}
+
+function changeGrid(){
+    console.log(this.value);
     label.textContent = this.value + ' x ' + this.value;
     grid.innerHTML = '';
     buildGrid(this.value);
     draw();
-})
-
-// check if mouse is currently clicked
-var mouseDown = 0;
-document.body.onmousedown = function() { 
-++mouseDown;
-}
-document.body.onmouseup = function() {
---mouseDown;
 }
 
+function setMarker(currentMode){
+    if (currentMode === "black"){
+        markerColor = "black";
+    }
+    else if (currentMode === "white"){
+        markerColor = "white";
+    }
+    else {
+         markerColor = chooseColor();
+    }
+    return markerColor;
+}
+
+document.body.addEventListener('mousedown', () => mouseDown = true);
+document.body.addEventListener('mouseup', () => mouseDown = false);
+blackButton.addEventListener('click', () => currentMode = "black");
+eraseButton.addEventListener('click', () => currentMode = "white");
+clearButton.addEventListener('click', clear);
+randomButton.addEventListener('click', () => currentMode = "random");
+slider.addEventListener('input', changeGrid);
 
 buildGrid(resolution);
 draw();
-
-
 
 
 
