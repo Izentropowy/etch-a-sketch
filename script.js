@@ -4,11 +4,12 @@ const blackButton = document.querySelector(".btn-black");
 const randomButton = document.querySelector(".btn-random");
 const eraseButton = document.querySelector(".btn-erase");
 const clearButton = document.querySelector(".btn-clear");
+const label = document.querySelector("label");
+const slider = document.getElementById("resolution");
 var pixel;
 let markerColor = "black";
 
-
-// Build a grid (80/60/48/40/24/20)
+// Build a grid (80/60/40/20)
 function buildGrid(resolution){
     let a = gridSide / resolution;
     for (let i = 0; i < resolution; i++){
@@ -17,6 +18,8 @@ function buildGrid(resolution){
             grid.appendChild(pixel);
             pixel.style.width = `${a}px`;
             pixel.style.height = `${a}px`;
+            pixel.style.userSelect = "none";
+            pixel.style.webkitUserDrag = "none";
         }
     }
 }
@@ -49,12 +52,11 @@ gridChildren.forEach(function(element){
     })
 })
 
-// change marker to black
+// tools functionality
 blackButton.addEventListener('click', function(){
     markerColor = "black";
 })
 
-// change marker to random
 randomButton.addEventListener('click', function(){
     let R = Math.floor(Math.random() * 256);
     let G = Math.floor(Math.random() * 256);
@@ -62,16 +64,23 @@ randomButton.addEventListener('click', function(){
     markerColor = `rgb(${R}, ${G}, ${B})`;
 })
 
-// change marker to white
 eraseButton.addEventListener('click', function(){
     markerColor = "white";
 })
 
-// erase the board
-clearButton.addEventListener('click', function(){
+function clear(){
     gridChildren.forEach(function(element){
         element.style.backgroundColor = "white";
     })
+}
+clearButton.addEventListener('click', function(){
+    clear();
+})
+
+slider.addEventListener('input', function(){
+    label.textContent = this.value + ' x ' + this.value;
+    // grid.innerHTML = '';
+    buildGrid(this.value);
 })
 
 

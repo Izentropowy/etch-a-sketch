@@ -49,6 +49,10 @@ body{
     align-self: center;
 }
 
+label {
+    display: block;
+    text-align: center;
+}
 .btn{
     font-size: larger;
     background-color: transparent;
