@@ -15,11 +15,10 @@ function buildGrid(resolution){
     for (let i = 0; i < resolution; i++){
         for (let j = 0; j < resolution; j++){
             pixel = document.createElement("div");
-            grid.appendChild(pixel);
+            pixel.classList.add("pixel");
             pixel.style.width = `${a}px`;
             pixel.style.height = `${a}px`;
-            pixel.style.userSelect = "none";
-            pixel.style.webkitUserDrag = "none";
+            grid.appendChild(pixel);
         }
     }
 }

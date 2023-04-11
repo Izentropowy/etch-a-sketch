@@ -87,7 +87,18 @@ label {
     flex-wrap: wrap;
 }
 
-@media screen and (max-width: 740px){
+.footer p{
+    padding: 20px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.pixel {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  @media screen and (max-width: 740px){
     .header{
         font-size: 16px;
     }
@@ -114,10 +125,3 @@ label {
         max-width: 50px;
     }
 }
-
-.footer p{
-    padding: 20px;
-    text-align: center;
-    font-family: sans-serif;
-}
-
